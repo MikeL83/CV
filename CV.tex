@@ -1,0 +1,356 @@
+% Adapted from layout by Jake Vanderplas
+% https://github.com/jakevdp/website/tree/master/CV
+%
+
+\documentclass{article} %{{{--
+\usepackage[paper=a4paper,
+	    top=2cm,
+	    left=1.35cm,
+	    width=18.2cm,
+	    bottom=2cm,
+	    ]{geometry}
+            %margin=4cm,
+\usepackage[english]{babel}
+\selectlanguage{english}
+\usepackage{calc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[pdftex,  % needed for pdflatex
+  breaklinks=true,  % so long urls are correctly broken across lines
+  colorlinks=true,
+  urlcolor=myblue]{hyperref}
+\usepackage{color}
+\usepackage[pdftex]{graphicx}
+\usepackage{multicol}
+\usepackage{wasysym} % For phone symbol
+\usepackage{url}
+\usepackage{marvosym}
+
+\def\bf{\bfseries}
+\def\sf{\sffamily}
+\def\sl{\slshape}
+% Semi condensed bold
+
+\definecolor{deep_blue}{rgb}{0,.2,.5}
+\definecolor{dark_blue}{rgb}{0,.1,.3}
+\definecolor{myblue}{rgb}{.01,0.21,0.71}
+\definecolor{gray}{rgb}{.5, .5, .5}
+
+
+%% This gives us fun enumeration environments. 
+\usepackage{enumitem}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+%% Reference the last page in the page number
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+%\fancyfootoffset{\marginparsep}+\marginparwidth}
+\lfoot{
+  \hspace{-2\marginparsep}
+  \,\hfill \arabic{page} of \protect\pageref*{LastPage}  \hfill \,\\
+  \,\hfill {\footnotesize \textcolor{gray}{updated February 2014~~~~~}} \hfill\,
+}
+
+\newcommand{\mydate}[1]{{\textcolor{gray}{\footnotesize #1}}}
+
+
+\newcommand{\makeheading}[1]%
+        {%\hspace*{-\marginparsep minus \marginparwidth}%
+         %\begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+         \begin{minipage}[t]{\textwidth}%
+                {\Large #1}\\%[-0.5\baselineskip]%
+                \vskip 0.2\baselineskip
+                 \color{deep_blue}{\rule{\columnwidth}{3pt}}%
+         \end{minipage}
+	 \vskip 1.\baselineskip plus 2\baselineskip minus 1.\baselineskip
+	}
+
+\newlength\sidebarwidth
+\setlength\sidebarwidth{3.6cm}
+
+\newcommand{\topic}[3][]%
+	 {\pagebreak[2]%
+	 \vskip 1.5\baselineskip plus 3\baselineskip minus 0.7\baselineskip
+	 \begin{minipage}{\textwidth}
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \nopagebreak\hspace{0in}%
+         \nopagebreak\begin{minipage}[t]{\sidebarwidth - .2cm}
+         \raggedleft \bf\sf 
+	 \color{deep_blue}{\Large #2}
+	 \end{minipage}%
+	 \hfill
+	 \begin{minipage}[t]{\linewidth - \sidebarwidth}
+	 \nopagebreak{\color{deep_blue}%
+		    \rule{0pt}{\baselineskip}%
+		    \rule{\linewidth}{2.5pt}%
+		    \llap{\raisebox{.3\baselineskip}{\sf #1}}%
+		    \vspace*{.1\baselineskip}%
+		    }%
+	 #3%
+	 \end{minipage}
+	 \end{minipage}}
+
+\newcommand{\smalltopic}[2]%
+	 {\pagebreak[2]%
+	 \vskip 1\baselineskip plus 2\baselineskip minus 0.3\baselineskip
+	 \begin{minipage}{\textwidth}
+	 %\hspace{-\marginparsep minus \marginparwidth}%
+         \phantomsection\addcontentsline{toc}{subsection}{#1}%
+         \nopagebreak\hspace{0in}%
+         \nopagebreak\begin{minipage}[t]{\sidebarwidth - .2cm}
+         \raggedleft \bf\sf %\vskip -0.5\baselineskip
+	 \textcolor{dark_blue}{\large #1}%
+	 \end{minipage}%
+	 \hfill
+	 \begin{minipage}[t]{\linewidth - \sidebarwidth}
+	 \nopagebreak{%
+	    %\vspace{-.7\baselineskip}%
+	    \rule{\linewidth}{.5pt}%
+	    \vspace{.1\baselineskip}%
+	    }%
+	    #2
+	 \end{minipage}
+	 \end{minipage}}
+
+\newcommand{\subtopic}[3][]
+	 {\begin{minipage}{\textwidth}
+	 \vspace*{.4\baselineskip}
+         \nopagebreak\hspace{0in}%
+         \nopagebreak\begin{minipage}[t]{\sidebarwidth - .2cm}
+	 % Super posh: using semi-bold condensed fonts. Works only with
+	 % lmodern
+         \raggedleft {\sf\fontseries{sbc}\selectfont #2}
+	 %{\small\sl\\[-0.2\baselineskip] #1}
+         {\\[-0.2\baselineskip] \textcolor{gray}{\footnotesize #1}}
+	 \end{minipage}%
+	 \hfill
+	 \begin{minipage}[t]{\linewidth - \sidebarwidth}
+	 #3%
+	 \end{minipage}%
+	 \vspace*{.2\baselineskip plus 1\baselineskip minus
+	 .2\baselineskip}%
+	 \end{minipage}}
+
+\newcommand{\dateonly}[2][]
+	 {\begin{minipage}{\textwidth}
+	 \vspace*{.4\baselineskip}
+         \nopagebreak\hspace{0in}%
+         \nopagebreak\begin{minipage}[t]{\sidebarwidth - .2cm}
+         \raggedleft {~}
+         {\\[-\baselineskip] \textcolor{gray}{\footnotesize #1}}
+	 \end{minipage}%
+	 \hfill
+	 \begin{minipage}[t]{\linewidth - \sidebarwidth}
+	 #2%
+	 \end{minipage}%
+	 \vspace*{.2\baselineskip plus 1\baselineskip minus
+	 .2\baselineskip}%
+	 \end{minipage}}
+
+\newcommand{\sidenote}[2]
+	 {\vspace*{-.2\baselineskip}\begin{minipage}{\textwidth}
+         \nopagebreak\hspace{0in}%
+         \nopagebreak\begin{minipage}[t]{\sidebarwidth - .2cm}
+         \raggedleft {#1}
+	 \end{minipage}%
+	 \hfill
+	 \begin{minipage}[t]{\linewidth - \sidebarwidth}
+	 #2%
+	 \end{minipage}%
+	 \vspace*{.5\baselineskip plus 1\baselineskip minus
+	 .2\baselineskip}%
+	 \end{minipage}}
+
+% New lists environments 
+\newlist{outerlist}{itemize}{1}
+\setlist[outerlist]{font=\sffamily\bfseries, label=\textbullet}
+\setitemize{topsep=0ex, partopsep=0ex}
+\setdescription{font=\normalfont\sffamily\bfseries, itemsep=.5ex,
+    parsep=.5ex, leftmargin=3ex}
+
+\newcommand{\blankline}{\quad\pagebreak[2]}
+
+\def\mydot{\textcolor{deep_blue}{\rule{1ex}{1ex}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--}}}%
+\begin{document}
+\makeheading{
+\begin{minipage}[B]{0.5\textwidth}
+    %\vfill
+    \vspace*{-.5\baselineskip}%
+    \parbox{10cm}{
+	\hskip -0.1cm
+	{\textcolor{gray}{\huge{\textsl{\textsf{Curriculum Vitae}}}}}
+	\hskip -0.1cm
+	\vspace{0.25 cm}
+	\\
+	{\Huge\bf\sf \color{deep_blue} M\huge \hskip -0.05cm IKKO %
+	 \Huge \color{deep_blue} L\huge \hskip -0.05cm EPPÄNEN}
+	\\[-.1\baselineskip]
+    }
+\end{minipage}
+\hfill
+\begin{minipage}[B]{8cm}
+    \raggedleft
+    \,\vskip -3em
+    \small
+        Raastuvankatu 22 C 2 \\
+        65100 Vaasa\\
+        Finland \\
+        {\textcolor{blue}\Mobilefone} \textsf{+358 40 730 8564}\\
+	      {\textcolor{blue}\Email} \texttt {mleppan23@gmail.com}%
+        \vspace*{-.5\baselineskip}%
+\end{minipage}
+}
+
+%\begin{center} 
+%\begin{minipage}{15cm}
+\begin{multicols}{2}
+\sloppy
+
+%\textcolor{deep_blue}{\bf\sf Research interests}:
+%Cosmology, weak lensing, data mining and automated learning algorithms for
+%large astronomical data sets.
+
+\begin{itemize}[leftmargin=2ex, itemsep=0ex]
+\item[\mydot]
+I currently work as a development engineer at Vacon. Mainly I'm responsible 
+for main circuit design of AC drives, focusing on inductive/capacitive components. 
+Alongside that I do various other tasks including electromagnetic/thermal simulations 
+and PDM/PLM usage.
+\item[\mydot]
+I am interested in programming (self-taught programmer) and open source. 
+Nowadays I spent significant time developing mobile applications. My future goal
+is to learn more about game programming. I constantly try to improve my skills and 
+learn new things weather it's related to some programming language or an open-source 
+scientific computing tool.    
+
+\end{itemize}
+\end{multicols}
+\vspace*{-1.5em}
+\fussy
+%\end{minipage}
+%\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\topic{E \large\hskip -1ex DUCATION}{~}
+
+    \subtopic[2003-2009]{\bf MS}{
+        Tampere University of Technology \\
+        Electrical Engineering(Electromagnetics)\\
+    }
+
+    \subtopic[1999-2002]{\ }{
+      Upper Secondary School of Kangasala\\
+    }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\topic{E \large\hskip -1ex XPERIENCE}{~}
+
+\vspace*{-0.5\baselineskip}
+\smalltopic{Employment}{}
+
+    \subtopic[2008--Present]{Vacon Plc}{
+      R\&D Development Engineer}
+
+    \subtopic[2007--2008]{TUT}{
+      Research Assistant\\
+      Tampere University of Technology}
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\topic{C \large\hskip -1ex OMPUTING}{
+  I am an active developer and I have made several contributions to the open source
+  community. 
+  For more information, see my Matlab Central File Exchange and Github profiles:\\
+  \href{http://www.mathworks.com/matlabcentral/fileexchange/authors/125461}
+  {http://www.mathworks.com/matlabcentral/fileexchange/authors/125461}\\
+  \href{https://github.com/MikeL83}{https://github.com/MikeL83}
+  \\
+  Matlab Central File Exchange pick of the week: \\
+  \href{http://blogs.mathworks.com/pick/2013/02/22/coding-challenge-on-input-parsing-result/}
+  {http://blogs.mathworks.com/pick/2013/02/22/coding-challenge-on-input-parsing-result/}
+  }
+
+%\vspace*{-0.5\baselineskip}
+\smalltopic{Skills}{
+
+  \begin{itemize}[leftmargin=0ex, itemsep=0ex, labelindent=-2ex, parsep=.5ex]
+    \item[\mydot] Proficient in Matlab, Python, C++, Qt/QML and Javascript. 
+    \item[\mydot] Experience with a variety of tools and languages, including
+      bash, \LaTeX{}, HTML5, CSS3, PHP, Git, SQLite, jQuery, Fortran, LLVM/Clang.
+    \item[\mydot] Operating systems: Linux (Ubuntu), Windows XP/7/8 and Sailfish OS. 
+  \end{itemize}
+
+}
+
+\smalltopic{Scientific simulation software}{}
+
+   \subtopic[]{Ansys Maxwell}{
+     I have used Maxwell electromagnetic field simulation software
+     many years for various engineering tasks.}
+
+   \subtopic[]{Ansys Icepak}{
+     I have now used Icepak for a few years. I have done several different 
+     kind of thermal simulations for the AC drives. In addtion I have participated 
+     in several trainings and seminars related to Icepak/thermal engineering.  
+   }
+
+   \subtopic[]{Ansys Simplorer}{
+     I have used Simplorer for the AC drives simulation.
+   }
+
+   \subtopic[]{Ansys Q3D}{
+     I have some experience with Q3D related to busbar simulations.  
+   }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\topic{C \large\hskip -1ex OURSES}{~}
+
+    \subtopic[2011]{ECPE}{
+        ECPE/Cluster Tutorial: Part 1 - Thermal Engineering of Power Electronic Systems (Thermal Design and           
+        Verification) - Erlangen, Germany\\
+    }
+
+    \subtopic[2011]{ECPE}{
+      ECPE/Cluster Tutorial: Part 2 - Thermal Engineering of Power Electronic Systems (Thermal Management and
+      Reliability) - Erlangen, Germany\\
+    }
+    
+    \subtopic[2014]{XSPIS}{
+      Cross platform application development using Qt framework\\
+    }
+    
+    \subtopic[2014]{XSPIS}{
+       Become a Developer for Sailfish Operating System: An Introduction \\
+    }
+    
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\topic{P \large\hskip -1ex ERSONAL DETAILS}{~}
+
+    \subtopic[]{\ }{
+        Place of Birth: Loviisa, Finland\\
+        Nationality: Finnish\\
+        Military Service: July 2002 -- July 2003\\
+    }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\topic{H \large\hskip -1ex OBBIES}{~}
+
+    \subtopic[]{\ }{
+        Mountain biking \\
+        Indoor rowing \\
+        Programming\\
+        Gym \\
+        Badminton
+    }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
